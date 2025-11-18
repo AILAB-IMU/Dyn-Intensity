@@ -19,7 +19,7 @@ All recordings were collected using a **Samsung Galaxy Watch 7 (SM-L300)** worn 
 - **Processor:** Exynos W1000
 - **RAM:** 2 GB
 
-All experiments were conducted in an **indoor sports facility 🏟**, ensuring stable wireless performance and consistent environmental conditions.
+All experiments were conducted in an **indoor sports facility**, ensuring stable wireless performance and consistent environmental conditions.
 
 ---
 
@@ -63,7 +63,7 @@ All uploaded files consist of **pre-computed feature sequences** derived from th
 
 For each activity, the raw x-, y-, and z-axis acceleration data were segmented using a fixed sliding-window configuration, and four statistical features were extracted from each window:
 
-the SVM mean, SVM variance, ΔSVM mean, and ΔSVM standard deviation.
+the SVM mean, SVM standard deviation, ΔSVM mean, and ΔSVM standard deviation.
 
 No additional filtering or smoothing was applied beyond this feature extraction process.
 
@@ -107,24 +107,18 @@ representing window-level statistics extracted from the original wrist-motion si
 Each CSV file contains the following four feature values computed for every window:
 
 - **svm_mean** — mean Signal Vector Magnitude within the window
-- **svm_var** — variance of the Signal Vector Magnitude within the window
-- **delta_svm_mean** — mean change in SVM between consecutive windows
-- **delta_svm_std** — standard deviation of SVM changes between consecutive windows
+- **svm_std** — standard deviation of the Signal Vector Magnitude within the window
+- **d_svm_mean** — mean change in SVM between consecutive windows
+- **d_svm_std** — standard deviation of SVM changes between consecutive windows
 
 Example CSV snippet:
 
 ```
-svm_mean, svm_var, delta_svm_mean, delta_svm_std
+svm_mean, svm_std, d_svm_mean, d_svm_std
 0.123, 0.0048, 0.115, 0.0071
 0.156, 0.0061, 0.142, 0.0084
 ...
 ```
-
-All feature values were computed directly from the original accelerometer recordings,
-
-and no additional filtering, interpolation, or normalization was applied beyond the
-
-defined feature extraction procedure.
 
 This format allows the data to be used immediately for model training or analysis,
 
@@ -176,4 +170,4 @@ Use in corporate R&D pipelines
 
 If you use this dataset, please cite:
 
-Dyn-Risk Dataset (2025), Sungshin Women’s University.
+Dyn-Risk Dataset (2025). Sungshin Women’s University. Available at: https://github.com/AILAB-IMU/Dyn-Risk
