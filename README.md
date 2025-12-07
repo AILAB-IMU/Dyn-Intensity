@@ -1,173 +1,189 @@
-# 📚 Dyn-Risk Dataset
+# 📚 Dyn-Risk & PAMAP2 Wrist-Motion Feature Dataset
 
-### Dynamic Wrist-Motion Dataset for Multi-Level Risk Detection
+### Dataset Accompanying the Paper
 
-For questions or suggestions, please contact **20231330@sungshin.ac.kr**.😊
+_“On-Device Real-Time Multi-Level Motion Activity Intensity Recognition Using Smartwatch Accelerometer”_
 
----
+This repository contains two wrist-motion **feature-level datasets** used in our research on **real-time, on-device, multi-level motion intensity recognition**:
 
-# I. 📡 Data Collection
+1. **Dyn-Risk Dataset** — our self-collected smartwatch accelerometer dataset
+2. **Processed PAMAP2 Wrist Dataset** — wrist-accelerometer subset of the public PAMAP2 dataset, preprocessed to match the Dyn-Risk feature format
 
-## I.1. 🛠 Hardware Setup
+Both datasets provide **sliding-window statistical features** (svm_mean, svm_std, d_svm_mean, d_svm_std), ensuring license compliance and ease of use.
 
-All recordings were collected using a **Samsung Galaxy Watch 7 (SM-L300)** worn on the dominant wrist.
-
-- **Sensor:** 3-axis accelerometer
-- **Sampling frequency:** 50 Hz
-- **Units:** raw acceleration in _g_ (gravity)
-- **Operating system:** Wear OS 5
-- **Processor:** Exynos W1000
-- **RAM:** 2 GB
-
-All experiments were conducted in an **indoor sports facility**, ensuring stable wireless performance and consistent environmental conditions.
+For inquiries: **20231330@sungshin.ac.kr**
 
 ---
 
-## I.2. 👤 Subjects
-
-A total of **8 adult female subjects** participated in the data collection.
-
-All participants wore the smartwatch on their **dominant wrist** and agreed to the use of their anonymized data for research purposes.
-
-Recordings were supervised to ensure consistent placement and proper execution of the defined activities.
-
----
-
-## I.3. 🎬 Data Collection Protocol
-
-Each participant performed a predefined set of **static, dynamic, and high-intensity wrist motions**, repeated multiple times to capture natural variability in amplitude, speed, and intensity.
-
-This range of actions allows the dataset to represent diverse wrist-motion patterns relevant to multi-level risk detection.
-
-The dataset includes the following activities:
-
-- **Lying 🛏️** — quiet resting posture with minimal movement.
-- **Sitting 🪑** — seated posture with small natural adjustments.
-- **Watching TV 📺** — relaxed sitting or lying while watching television.
-- **Board work ✍️** — standing writing or erasing on a board with moderate arm swings.
-- **Palm pushing ✋➡️** — repetitive forward pushing motions resembling resistance or self-defense movement.
-- **Dynamic handclap 👏🔥** — vigorous clapping with strong upper-arm motion.
-- **Jumping jacks 🦘** — full-body jumping with coordinated arm–leg spreading.
-- **Running 🏃‍♀️💨** — high-speed sprinting generating strong wrist and body acceleration.
-- **Slalom running 🏃‍♂️🌀** — zig-zag running requiring rapid direction changes.
-- **Rope jumping 🤾‍♀️** — repetitive rope-skipping motion with rhythmic impacts.
-- **Ascending stairs ⬆️🏢** — moving upstairs across multiple floors.
-- **Descending stairs ⬇️🏢** — moving downstairs in a controlled manner.
-- **User_level5 ⚠️🔥** — simulated high-intensity struggle motion with rapid arm swings, pushing forces, and evasive actions.
-
----
-
-## I.4. 📊 Summary of Collected Data
-
-All uploaded files consist of **pre-computed feature sequences** derived from the original smartwatch accelerometer signals.
-
-For each activity, the raw x-, y-, and z-axis acceleration data were segmented using a fixed sliding-window configuration, and four statistical features were extracted from each window:
-
-the SVM mean, SVM standard deviation, ΔSVM mean, and ΔSVM standard deviation.
-
-No additional filtering or smoothing was applied beyond this feature extraction process.
-
-Each CSV file contains a continuous sequence of these four feature values, representing multiple repetitions of each activity and preserving the natural variability of wrist motion.
-
----
-
-# II. 🗂 Data Format (Feature-Based Dataset)
-
-## II.1. 📁 Raw File Structure
-
-The dataset is organized in a **subject-level directory structure**,
-
-where each subject folder contains one CSV file per performed activity.
-
-Each file consists of a continuous sequence of **four pre-computed features**,
-
-derived from raw accelerometer signals using a fixed sliding-window configuration.
-
-Example directory structure:
+# 🗂 Repository Structure
 
 ```
-Dyn-Risk/
-  ├── subject01/
-  │     ├── jumping_jacks.csv
-  │     ├── rope_jumping.csv
-  │     └── ...
-  ├── subject02/
-  └── ...
-
+Dyn-Risk-Dataset/
+│
+├── Dyn-Risk/                 # Our self-collected 50Hz wrist-motion feature dataset
+│     ├── subject01/
+│     ├── subject02/
+│     └── ...
+│
+├── PAMAP2/                   # Processed PAMAP2 wrist-motion feature dataset
+│     ├── subject101/
+│     ├── subject102/
+│     └── ...
+│
+├── LICENSE                   # CC BY-NC 4.0
+└── README.md
 ```
-
-Every CSV file follows a consistent feature-based format,
-
-representing window-level statistics extracted from the original wrist-motion signals.
 
 ---
 
-## II.2. 📄 CSV Data Composition
+# 1. 📡 Dyn-Risk Dataset (Self-Collected)
 
-Each CSV file contains the following four feature values computed for every window:
+## 1.1 🛠 Hardware Setup
 
-- **svm_mean** — mean Signal Vector Magnitude within the window
-- **svm_std** — standard deviation of the Signal Vector Magnitude within the window
-- **d_svm_mean** — mean change in SVM between consecutive windows
-- **d_svm_std** — standard deviation of SVM changes between consecutive windows
+All signals were recorded with a **Samsung Galaxy Watch 7 (SM-L300)** on the dominant wrist.
 
-Example CSV snippet:
+- **Sensor**: 3-axis accelerometer
+- **Frequency**: 50 Hz
+- **Units**: raw acceleration in _g_
+- **OS**: Wear OS 5
+- **Environment**: Indoor sports facility
+
+---
+
+## 1.2 👤 Subjects
+
+A total of **8 adult female subjects** participated voluntarily, wearing the watch on their dominant wrist.  
+All recordings were supervised for consistency and safety.
+
+---
+
+## 1.3 🎬 Recorded Activities
+
+Dyn-Risk includes **static, dynamic, and high-intensity motions**, such as:
+
+- Lying
+- Sitting
+- Watching TV
+- Board work
+- Palm pushing
+- Dynamic handclap
+- Jumping jacks
+- Running
+- Slalom running
+- Rope jumping
+- Ascending stairs
+- Descending stairs
+- User_Level5 (synthetic struggle/defense motion)
+
+---
+
+## 1.4 📊 Feature Description
+
+Raw accelerometer data were segmented using a sliding window (**300 samples**, step **150**), and four statistical features were computed:
+
+| Feature        | Description                  |
+| -------------- | ---------------------------- |
+| **svm_mean**   | Mean Signal Vector Magnitude |
+| **svm_std**    | SVM standard deviation       |
+| **d_svm_mean** | Mean absolute change in SVM  |
+| **d_svm_std**  | Std of SVM changes           |
+
+---
+
+# 2. 🎧 Processed PAMAP2 Wrist-Motion Dataset
+
+This repository includes only **processed, feature-level PAMAP2 wrist-acceleration data**  
+to ensure **license compatibility** (raw PAMAP2 data cannot be redistributed).
+
+We extracted and processed only the **wrist-related activities** used in our study, then applied:
+
+- **100 → 50 Hz downsampling** (anti-alias filtering)
+- **Sliding-window feature extraction** identical to Dyn-Risk
+
+This ensures the two datasets are **directly compatible** for training.
+
+---
+
+## 2.1 📁 PAMAP2 Activities Included
+
+- Lying
+- Sitting
+- Standing
+- Watching TV
+- Computer work
+- Car driving
+- Ironing
+- Folding laundry
+- Vacuum cleaning
+- Cycling
+- Walking
+
+All files follow the same feature format as Dyn-Risk.
+
+---
+
+# 3. 🗂 Feature File Structure
+
+Example:
+
+```
+PAMAP2/subject101/walking.csv
+Dyn-Risk/subject03/jumping_jacks.csv
+```
+
+Each CSV contains:
 
 ```
 svm_mean, svm_std, d_svm_mean, d_svm_std
-0.123, 0.0048, 0.115, 0.0071
-0.156, 0.0061, 0.142, 0.0084
+0.123,     0.0048,  0.115,      0.0071
+0.156,     0.0061,  0.142,      0.0084
 ...
 ```
 
-This format allows the data to be used immediately for model training or analysis,
-
-while preserving natural variability in wrist-motion dynamics in a compact and interpretable form.
-
 ---
 
-# III. 📥 Usage Example
+# 4. 📥 Usage Example (Python)
 
-A basic example of how to load the dataset in Python:
-
-```
+```python
 import pandas as pd
 
 df = pd.read_csv("Dyn-Risk/subject01/jumping_jacks.csv")
 print(df.head())
+
+df2 = pd.read_csv("PAMAP2/subject101/walking.csv")
+print(df2.head())
 ```
 
 ---
 
-# IV. 📜 License (CC BY-NC 4.0)
+# 5. 📜 License
 
-The Dyn-Risk Dataset is licensed under the
-📄 Creative Commons Attribution–NonCommercial 4.0 International (CC BY-NC 4.0).
+The Dyn-Risk Dataset and processed PAMAP2 derivatives are released under:
 
-✔ Allowed:
+## **Creative Commons Attribution–NonCommercial 4.0 International (CC BY-NC 4.0)**
 
-Research and educational use
+✔ Research & educational use  
+✔ Modification and derived works (non-commercial)  
+✔ Redistribution with attribution
 
-Non-commercial projects
+❌ Commercial use prohibited  
+❌ Integration into commercial or proprietary systems
 
-Modification, preprocessing, and derived works
-
-Sharing analysis results with attribution
-
----
-
-❌ Not Allowed:
-
-Commercial use
-
-Integration into paid products or commercial services
-
-Use in corporate R&D pipelines
+See the full license in the **LICENSE** file.
 
 ---
 
-📌 Attribution Requirement
+# 6. 📌 Citation
 
 If you use this dataset, please cite:
 
-Dyn-Risk Dataset (2025). Sungshin Women’s University. Available at: https://github.com/AILAB-IMU/Dyn-Risk
+```
+Dyn-Risk Dataset (2025). Sungshin Women’s University.
+Available at: https://github.com/AILAB-IMU/Dyn-Risk-Dataset
+```
+
+---
+
+# 7. 💬 Contact
+
+For questions, please contact: **20231330@sungshin.ac.kr**
