@@ -1,4 +1,4 @@
-# 📚 Dyn-Risk & PAMAP2 Wrist-Motion Feature Dataset
+# 📚 Dyn-Intensity & PAMAP2 Wrist-Motion Feature Dataset
 
 ### Dataset Accompanying the Paper
 
@@ -6,8 +6,8 @@ _“On-Device Real-Time Multi-Level Motion Activity Intensity Recognition Using 
 
 This repository contains two wrist-motion **feature-level datasets** used in our research on **real-time, on-device, multi-level motion intensity recognition**:
 
-1. **Dyn-Risk Dataset** — our self-collected smartwatch accelerometer dataset
-2. **Processed PAMAP2 Wrist Dataset** — wrist-accelerometer subset of the public PAMAP2 dataset, preprocessed to match the Dyn-Risk feature format
+1. **Dyn-Intensity Dataset** — our self-collected smartwatch accelerometer dataset
+2. **Processed PAMAP2 Wrist Dataset** — wrist-accelerometer subset of the public PAMAP2 dataset, preprocessed to match the Dyn-Intensity feature format
 
 Both datasets provide **sliding-window statistical features** (svm_mean, svm_std, d_svm_mean, d_svm_std), ensuring license compliance and ease of use.
 
@@ -18,9 +18,9 @@ For inquiries: **20231330@sungshin.ac.kr**
 # 🗂 Repository Structure
 
 ```
-Dyn-Risk-Dataset/
+Dyn-Intensity-Dataset/
 │
-├── Dyn-Risk/                 # Our self-collected 50Hz wrist-motion feature dataset
+├── Dyn-Intensity/                 # Our self-collected 50Hz wrist-motion feature dataset
 │     ├── subject01/
 │     ├── subject02/
 │     └── ...
@@ -36,7 +36,7 @@ Dyn-Risk-Dataset/
 
 ---
 
-# 1. 📡 Dyn-Risk Dataset (Self-Collected)
+# 1. 📡 Dyn-Intensity Dataset (Self-Collected)
 
 ## 1.1 🛠 Hardware Setup
 
@@ -59,7 +59,7 @@ All recordings were supervised for consistency and safety.
 
 ## 1.3 🎬 Recorded Activities
 
-Dyn-Risk includes **static, dynamic, and high-intensity motions**, such as:
+Dyn-Intensity includes **static, dynamic, and high-intensity motions**, such as:
 
 - Lying
 - Sitting
@@ -98,7 +98,7 @@ to ensure **license compatibility** (raw PAMAP2 data cannot be redistributed).
 We extracted and processed only the **wrist-related activities** used in our study, then applied:
 
 - **100 → 50 Hz downsampling** (anti-alias filtering)
-- **Sliding-window feature extraction** identical to Dyn-Risk
+- **Sliding-window feature extraction** identical to Dyn-Intensity
 
 This ensures the two datasets are **directly compatible** for training.
 
@@ -118,7 +118,7 @@ This ensures the two datasets are **directly compatible** for training.
 - Cycling
 - Walking
 
-All files follow the same feature format as Dyn-Risk.
+All files follow the same feature format as Dyn-Intensity.
 
 ---
 
@@ -128,7 +128,7 @@ Example:
 
 ```
 PAMAP2/subject101/walking.csv
-Dyn-Risk/subject03/jumping_jacks.csv
+Dyn-Intensity/subject03/jumping_jacks.csv
 ```
 
 Each CSV contains:
@@ -147,7 +147,7 @@ svm_mean, svm_std, d_svm_mean, d_svm_std
 ```python
 import pandas as pd
 
-df = pd.read_csv("Dyn-Risk/subject01/jumping_jacks.csv")
+df = pd.read_csv("Dyn-Intensity/subject01/jumping_jacks.csv")
 print(df.head())
 
 df2 = pd.read_csv("PAMAP2/subject101/walking.csv")
@@ -158,7 +158,7 @@ print(df2.head())
 
 # 5. 📜 License
 
-The Dyn-Risk Dataset and processed PAMAP2 derivatives are released under:
+The Dyn-Intensity Dataset and processed PAMAP2 derivatives are released under:
 
 ## **Creative Commons Attribution–NonCommercial 4.0 International (CC BY-NC 4.0)**
 
@@ -178,8 +178,8 @@ See the full license in the **LICENSE** file.
 If you use this dataset, please cite:
 
 ```
-Dyn-Risk Dataset (2025). Sungshin Women’s University.
-Available at: https://github.com/AILAB-IMU/Dyn-Risk-Dataset
+Dyn-Intensity Dataset (2025). Sungshin Women’s University.
+Available at: https://github.com/AILAB-IMU/Dyn-Intensity-Dataset
 ```
 
 ---
